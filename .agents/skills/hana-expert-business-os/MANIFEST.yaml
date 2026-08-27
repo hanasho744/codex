@@ -1,0 +1,79 @@
+name: hana-expert-business-os
+version: 1.1.0
+status: active
+purpose: >-
+  Expert-grade operating system for Japan-focused cross-border trade,
+  hardware/AI/robotics research, product/supply-chain control, compliance,
+  pricing, export delivery, finance, PMO, client reporting, and knowledge assetization.
+
+entrypoints:
+  router: SKILL.md
+  routing_matrix: ROUTING_MATRIX.md
+  chatgpt_index: ../../../../CHATGPT_SKILL_INDEX.md
+  codex_instructions: ../../../../AGENTS.md
+
+specialist_skills:
+  research_intelligence: research-intelligence/SKILL.md
+  product_supplychain_ledger: product-supplychain-ledger/SKILL.md
+  japan_compliance_trade: japan-compliance-trade/SKILL.md
+  commercial_pricing: commercial-pricing/SKILL.md
+  export_delivery_control: export-delivery-control/SKILL.md
+  client_reporting_jp: client-reporting-jp/SKILL.md
+  project_control_tower: project-control-tower/SKILL.md
+  business_finance_analysis: business-finance-analysis/SKILL.md
+  knowledge_assetization: knowledge-assetization/SKILL.md
+
+evaluation:
+  master_rubric: evaluation/EXPERT_RUBRIC.md
+  domain_rubrics: evaluation/DOMAIN_RUBRICS.md
+  qa_card: evaluation/QA_CARD_TEMPLATE.md
+  release_gate: evaluation/RELEASE_GATE.md
+  evaluator_protocol: evaluation/EVALUATOR_PROTOCOL.md
+  target_score_external: 90
+  conditional_score_min: 85
+  fatal_defect_policy: no_go
+
+benchmarks:
+  framework: benchmarks/README.md
+  cases: benchmarks/BENCHMARK_CASES.md
+  behavioral_examples: benchmarks/GOLD_BAD_PATTERNS.md
+  families: 9
+
+quality_principles:
+  - evidence_backed
+  - model_and_version_specific
+  - fact_inference_separation
+  - quantitative_auditability
+  - commercial_and_operational_coherence
+  - executive_decision_clarity
+  - specialist_appendix_depth
+  - explicit_uncertainty
+  - internal_external_firewall
+  - reusable_business_asset
+
+mandatory_review_passes:
+  - evidence_and_factual_integrity
+  - domain_and_commercial_integrity
+  - client_delivery_integrity
+
+external_release:
+  normal_go: score_gte_90_and_zero_fatal_defects
+  conditional_go: score_85_to_89_zero_fatal_defects_and_targeted_human_review
+  no_go:
+    - score_lt_85
+    - any_fatal_defect
+
+confidentiality:
+  policy: CONFIDENTIALITY.md
+  repository_assumption: public
+  real_private_client_data_allowed_in_repo: false
+  benchmark_data: synthetic_or_irreversibly_anonymized_only
+
+languages:
+  internal_analysis: [zh-CN, en, ja]
+  japan_client_default: ja
+
+maintenance:
+  regression_required_for_recurring_failure: true
+  update_rule: change_skill_then_retest_previous_benchmarks
+  semantic_versioning: true
