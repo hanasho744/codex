@@ -63,5 +63,23 @@ Use real product/company/factory/process images only when they add evidentiary o
 - no internal-only information leakage
 - all requested questions answered or explicitly marked unresolved
 
+## Mandatory release evaluation
+For material external deliverables:
+1. score the output with `../evaluation/EXPERT_RUBRIC.md`,
+2. apply the relevant section of `../evaluation/DOMAIN_RUBRICS.md`,
+3. complete `../evaluation/QA_CARD_TEMPLATE.md` internally,
+4. pass `../evaluation/RELEASE_GATE.md`.
+
+Default release rule:
+- >=90/100 and zero fatal defects: GO
+- 85–89: CONDITIONAL GO only after targeted human review
+- <85: NO-GO / rework
+- any fatal defect: NO-GO regardless of score
+
+The external client should not receive the internal QA score/card unless explicitly requested.
+
+## Benchmark calibration
+When the task resembles a recurring pattern, compare behavior against `../benchmarks/BENCHMARK_CASES.md` and `../benchmarks/GOLD_BAD_PATTERNS.md`. Do not copy benchmark wording mechanically; use it to calibrate evidence discipline, granularity, and decision quality.
+
 ## Output tone
 Professional consulting / engineering-commercial hybrid. Concise at executive level; highly granular in appendices and evidence tables.
