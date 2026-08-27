@@ -19,7 +19,7 @@ Use this router for requests involving any of:
 Do not produce generic summaries. Deliver work at or above specialist-consulting level: evidence-backed, structured, commercially useful, operationally actionable, and auditable.
 
 ## Router
-Load the minimum necessary specialist skill(s):
+Use `ROUTING_MATRIX.md` when task intent spans more than one domain. Load the minimum necessary specialist skill(s):
 1. `research-intelligence` — company/product/market/industry/supplier investigations.
 2. `product-supplychain-ledger` — SKU/model/revision/spec/BOM/supplier/production/packaging lifecycle.
 3. `japan-compliance-trade` — HS, Japan regulation, certification, labeling, importer, origin, battery/DG.
@@ -57,6 +57,24 @@ Every material output must be reviewed in three passes before delivery.
 - Japanese output must be natural business Japanese, not literal Chinese translation.
 - Tables need normalized units and comparison dimensions.
 - Remove filler, generic AI phrasing, and unsupported superlatives.
+
+## Evaluation & release layer
+For material deliverables, especially external/client-facing work:
+- score with `evaluation/EXPERT_RUBRIC.md`
+- apply the relevant specialist checks in `evaluation/DOMAIN_RUBRICS.md`
+- follow `evaluation/EVALUATOR_PROTOCOL.md`
+- complete `evaluation/QA_CARD_TEMPLATE.md` internally when appropriate
+- apply `evaluation/RELEASE_GATE.md` before external release
+
+Default external release policy:
+- >=90/100 + zero fatal defects: GO
+- 85–89 + zero fatal defects: CONDITIONAL GO after targeted human review
+- <85: NO-GO
+- any fatal defect: NO-GO regardless of score
+
+Use the benchmark suite to calibrate strictness and prevent regressions:
+- `benchmarks/BENCHMARK_CASES.md`
+- `benchmarks/GOLD_BAD_PATTERNS.md`
 
 ## Evidence-grade taxonomy
 Use internally and expose when useful:
@@ -136,6 +154,10 @@ When generating structured deliverables:
 - File naming: `{Project}_{Deliverable}_{Market}_{YYYYMMDD}_vX.Y` where practical.
 - Version changes affecting conclusions must increment version and record change log.
 
+## Confidentiality & persistence
+Follow `CONFIDENTIALITY.md`.
+Assume this repository is public unless verified otherwise. Persist methods, schemas, synthetic benchmarks, and anonymized patterns only. Do not persist real confidential client/project data, private messages, account details, non-public pricing, supplier confidential information, or credentials into this Skill repository.
+
 ## Stop / escalation conditions
 Do not present a final expert conclusion without qualification if:
 - legal/regulatory applicability is unresolved;
@@ -145,6 +167,14 @@ Do not present a final expert conclusion without qualification if:
 - current policy/tariff/certification status cannot be verified;
 - evidence conflicts in a way that changes the recommendation.
 Instead, state the provisional conclusion, unresolved variable, and exact verification action.
+
+## Continuous improvement
+When a real project reveals a recurring failure mode:
+1. abstract the failure into a synthetic/anonymized benchmark,
+2. update the relevant specialist skill/rubric,
+3. rerun prior benchmark logic conceptually or operationally,
+4. avoid fixing one case by weakening another domain standard,
+5. record material behavioral changes in the changelog/version.
 
 ## Output expectation
 The user should receive not merely information, but a professional decision product that can be used with customers, suppliers, partners, or internally without needing to reconstruct the analysis from scratch.
