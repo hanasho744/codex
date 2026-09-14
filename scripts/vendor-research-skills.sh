@@ -22,6 +22,8 @@ clone_sparse() {
   CURRENT_TMP="$TMP_BASE/${repo//\//__}"
   echo "==> Fetching $repo"
   git clone --depth 1 --filter=blob:none --sparse "https://github.com/${repo}.git" "$CURRENT_TMP"
+  # Cone-mode sparse checkout keeps top-level files (including root LICENSE files)
+  # while materializing only the requested directories below the repository root.
   git -C "$CURRENT_TMP" sparse-checkout set "$@"
   CURRENT_SHA="$(git -C "$CURRENT_TMP" rev-parse HEAD)"
 }
@@ -54,7 +56,7 @@ lock_repo() {
 # IMPORTANT: upstream license is CC BY-NC 4.0. Installed for non-commercial
 # academic/research use only; routing policy in AGENTS.md blocks client/commercial use.
 clone_sparse "Imbad0202/academic-research-skills" \
-  deep-research academic-paper academic-paper-reviewer academic-pipeline LICENSE
+  deep-research academic-paper academic-paper-reviewer academic-pipeline
 copy_skill "$CURRENT_TMP/deep-research"
 copy_skill "$CURRENT_TMP/academic-paper"
 copy_skill "$CURRENT_TMP/academic-paper-reviewer"
@@ -68,8 +70,7 @@ clone_sparse "Galaxy-Dawn/claude-scholar" \
   skills/obsidian-literature-workflow \
   skills/obsidian-source-ingestion \
   skills/research-ideation \
-  skills/paper-self-review \
-  LICENSE
+  skills/paper-self-review
 copy_skill "$CURRENT_TMP/skills/citation-verification"
 copy_skill "$CURRENT_TMP/skills/obsidian-literature-workflow"
 copy_skill "$CURRENT_TMP/skills/obsidian-source-ingestion"
@@ -85,8 +86,7 @@ clone_sparse "Yuan1z0825/nature-skills" \
   skills/nature-citation \
   skills/nature-ref-verifier \
   skills/nature-reader \
-  skills/nature-shared \
-  LICENSE
+  skills/nature-shared
 copy_skill "$CURRENT_TMP/skills/nature-writing"
 copy_skill "$CURRENT_TMP/skills/nature-polishing"
 copy_skill "$CURRENT_TMP/skills/nature-citation"
@@ -100,8 +100,7 @@ lock_repo "Yuan1z0825/nature-skills" "nature-writing,nature-polishing,nature-cit
 # importing the 1,150+ catalog entries into the active namespace.
 clone_sparse "brycewang-stanford/Auto-Empirical-Research-Skills" \
   skills/00.1-Full-empirical-analysis-skill_Python \
-  skills/11-James-Traina-compound-science/skills/empirical-playbook \
-  LICENSE
+  skills/11-James-Traina-compound-science/skills/empirical-playbook
 copy_skill "$CURRENT_TMP/skills/00.1-Full-empirical-analysis-skill_Python" "empirical-analysis-python"
 copy_skill "$CURRENT_TMP/skills/11-James-Traina-compound-science/skills/empirical-playbook"
 copy_license "auto-empirical-research-skills"
@@ -113,8 +112,7 @@ clone_sparse "K-Dense-AI/scientific-agent-skills" \
   skills/scientific-critical-thinking \
   skills/scientific-visualization \
   skills/biopython \
-  skills/rdkit \
-  LICENSE
+  skills/rdkit
 copy_skill "$CURRENT_TMP/skills/scientific-writing"
 copy_skill "$CURRENT_TMP/skills/scientific-critical-thinking"
 copy_skill "$CURRENT_TMP/skills/scientific-visualization"
@@ -126,7 +124,7 @@ lock_repo "K-Dense-AI/scientific-agent-skills" "scientific-writing,scientific-cr
 # 6) AI-Research-SKILLs — install selected AI research categories only.
 # The upstream library is large; category curation keeps trigger space and context manageable.
 clone_sparse "Orchestra-Research/AI-Research-SKILLs" \
-  0-autoresearch-skill 01-model-architecture 03-fine-tuning 06-post-training 11-evaluation LICENSE
+  0-autoresearch-skill 01-model-architecture 03-fine-tuning 06-post-training 11-evaluation
 for category in 0-autoresearch-skill 01-model-architecture 03-fine-tuning 06-post-training 11-evaluation; do
   while IFS= read -r skill_file; do
     skill_dir="$(dirname "$skill_file")"
@@ -143,7 +141,7 @@ lock_repo "Orchestra-Research/AI-Research-SKILLs" "autoresearch,model-architectu
 
 # 7) codex-claude-academic-skills — Chinese-friendly STEM/MATLAB/scientific toolkit.
 clone_sparse "zLanqing/codex-claude-academic-skills" \
-  research-writing-skill office-academic-skill scientific-toolkit-skill LICENSE
+  research-writing-skill office-academic-skill scientific-toolkit-skill
 copy_skill "$CURRENT_TMP/research-writing-skill"
 copy_skill "$CURRENT_TMP/office-academic-skill"
 copy_skill "$CURRENT_TMP/scientific-toolkit-skill"
@@ -160,8 +158,7 @@ clone_sparse "wanshuiyin/Auto-claude-code-research-in-sleep" \
   skills/auto-review-loop \
   skills/auto-paper-improvement-loop \
   skills/paper-writing \
-  skills/paper-claim-audit \
-  LICENSE
+  skills/paper-claim-audit
 for s in research-pipeline idea-discovery research-lit novelty-check auto-review-loop auto-paper-improvement-loop paper-writing paper-claim-audit; do
   if [[ -d "$CURRENT_TMP/skills/$s" ]]; then
     copy_skill "$CURRENT_TMP/skills/$s"
@@ -171,7 +168,7 @@ copy_license "aris"
 lock_repo "wanshuiyin/Auto-claude-code-research-in-sleep" "research-pipeline,idea-discovery,research-lit,novelty-check,auto-review-loop,auto-paper-improvement-loop,paper-writing,paper-claim-audit"
 
 # 9) Research Paper Writing Skills — ML/CV/NLP paper structure and claim/evidence discipline.
-clone_sparse "Master-cai/Research-Paper-Writing-Skills" research-paper-writing LICENSE
+clone_sparse "Master-cai/Research-Paper-Writing-Skills" research-paper-writing
 copy_skill "$CURRENT_TMP/research-paper-writing"
 copy_license "research-paper-writing-skills"
 lock_repo "Master-cai/Research-Paper-Writing-Skills" "research-paper-writing"
