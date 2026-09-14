@@ -1,0 +1,52 @@
+name: Vendor Research Skills
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/vendor-research-skills.sh'
+      - '.github/workflows/vendor-research-skills.yml'
+      - 'RESEARCH_SKILL_REGISTRY.md'
+      - 'AGENTS.md'
+      - 'CHATGPT_SKILL_INDEX.md'
+
+permissions:
+  contents: write
+
+jobs:
+  vendor:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Vendor curated research skills
+        shell: bash
+        run: bash scripts/vendor-research-skills.sh
+
+      - name: Verify installed skill layer
+        shell: bash
+        run: |
+          test -f RESEARCH_SKILLS_LOCK.tsv
+          test -f .agents/skills/nature-polishing/SKILL.md
+          test -f .agents/skills/empirical-analysis-python/SKILL.md
+          test -f .agents/skills/scientific-toolkit-skill/SKILL.md
+          test -f .agents/skills/research-paper-writing/SKILL.md
+          echo "Direct skill folders: $(find .agents/skills -mindepth 2 -maxdepth 2 -name SKILL.md | wc -l)"
+
+      - name: Commit vendored skills and lockfile
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add .agents/skills .agents/vendor-licenses RESEARCH_SKILLS_LOCK.tsv
+          if git diff --cached --quiet; then
+            echo 'No vendored changes to commit.'
+            exit 0
+          fi
+          git commit -m 'Vendor curated academic and scientific skills'
+          git push origin HEAD:main
