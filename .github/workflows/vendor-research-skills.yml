@@ -6,6 +6,7 @@ on:
     branches: [main]
     paths:
       - 'scripts/vendor-research-skills.sh'
+      - 'scripts/harden-research-skill-policies.sh'
       - '.github/workflows/vendor-research-skills.yml'
       - 'RESEARCH_SKILL_REGISTRY.md'
       - 'AGENTS.md'
@@ -28,6 +29,10 @@ jobs:
         shell: bash
         run: bash scripts/vendor-research-skills.sh
 
+      - name: Apply governance policy overlays
+        shell: bash
+        run: bash scripts/harden-research-skill-policies.sh
+
       - name: Verify installed skill layer
         shell: bash
         run: |
@@ -36,6 +41,7 @@ jobs:
           test -f .agents/skills/empirical-analysis-python/SKILL.md
           test -f .agents/skills/scientific-toolkit-skill/SKILL.md
           test -f .agents/skills/research-paper-writing/SKILL.md
+          test -f .agents/skills/0-autoresearch-skill/agents/openai.yaml
           echo "Direct skill folders: $(find .agents/skills -mindepth 2 -maxdepth 2 -name SKILL.md | wc -l)"
 
       - name: Commit vendored skills and lockfile
